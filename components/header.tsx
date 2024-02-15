@@ -4,6 +4,7 @@ import { HeaderNavigation } from './header-navigation'
 import Link from 'next/link'
 import ProfileButton from './profile-button'
 import ResponsiveMenu from './responsive-menu'
+import ToggleTheme from './toggle-theme'
 
 export default function Header() {
   return (
@@ -19,7 +20,8 @@ export default function Header() {
             <ResponsiveMenu />
             <HeaderNavigation />
             {/* buttons */}
-            <div className="flex items-center">
+            <div className="flex items-center gap-4">
+              <ToggleTheme />
               <ProfileButton />
             </div>
           </div>
