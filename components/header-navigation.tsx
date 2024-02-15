@@ -20,7 +20,7 @@ import { Category } from "@/utils/types"
 
 export function HeaderNavigation() {
   return (
-    <NavigationMenu>
+    <NavigationMenu className="hidden lg:inline">
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
