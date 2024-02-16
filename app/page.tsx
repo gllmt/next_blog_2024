@@ -1,14 +1,20 @@
 "use client";
 
 import PageContainer from "@/components/page-container";
+import PostsList from "@/components/posts-list";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { CATEGORIES } from "@/utils/data/categories";
+import { POSTS } from "@/utils/data/posts";
+import { Category } from "@/utils/types";
+import Link from "next/link";
 
 export default function Home() {
 
   return (
     <PageContainer>
       <div className="py-10 px-4">
+        {/* Hero section */}
         <div
           style={{backgroundImage: "url('/img/hero_bg.jpg')"}}
           className="rounded-lg aspect-square md:aspect-[2.4/1] overflow-hidden bg-cover bg-center shadow-lg"
@@ -19,10 +25,20 @@ export default function Home() {
                   Become A Better React Developer
                 </h1>
                 <Input type="email" placeholder="Enter your email" className="light:bg-white mt-4" />
-                <Button size="lg" className="w-full py-6 text-xl mt-4 text-white dark:text-black light:bg-white">Subscibe to our newsletter</Button>
+                <Button size="lg" variant="outline" className="w-full py-6 text-xl mt-4">Subscibe to our newsletter</Button>
               </div>
           </div>
         </div>
+        {/* Categories section */}
+        <div className="flex flex-col md:flex-row justify-center items-center gap-4 mt-6">
+          {CATEGORIES.map((category: Category) => (
+            <Button key={category.id} variant="outline">
+              <Link href={`/categories/${category.slug}`}>{category.name}</Link>
+            </Button>
+          ))}
+        </div>
+        {/* List Posts section */}
+        <PostsList posts={POSTS} />
       </div>
     </PageContainer>
   );
