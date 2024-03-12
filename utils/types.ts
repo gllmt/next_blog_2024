@@ -1,3 +1,5 @@
+import { Prisma } from "@prisma/client";
+
 export type Category = {
     id: number;
     name: string;
@@ -16,4 +18,8 @@ export type Post = {
     nbComments: number;
     slug: string;
     content?: string;
-  };
+};
+
+export type PostWithCategory = Prisma.PostGetPayload<{
+    include: { cat: true };
+}>;

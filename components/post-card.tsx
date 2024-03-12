@@ -1,4 +1,4 @@
-import { Post } from "@/utils/types"
+import { PostWithCategory } from "@/utils/types"
 import Link from "next/link";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import Image from "next/image";
@@ -6,7 +6,7 @@ import { Badge } from "./ui/badge";
 import { Eye, MessageCircle } from "lucide-react";
 
 type Props = {
-    post: Post;
+    post: PostWithCategory;
 }
 
 export default function PostCard({post}: Props) {
@@ -27,7 +27,7 @@ export default function PostCard({post}: Props) {
         </CardHeader>
         <CardContent>
           <Badge variant="outline" className="py-2 px-4">
-            {post.category}
+            {post.cat.title}
           </Badge>
         </CardContent>
         <CardFooter>
@@ -38,7 +38,7 @@ export default function PostCard({post}: Props) {
             </div>
             <div className="flex items-center gap-1">
               <Eye size={16} className="text-slate-500" />
-              <p className="text-slate-500">{post.nbViews}</p>
+              <p className="text-slate-500">{post.view}</p>
             </div>
           </div>
         </CardFooter>
