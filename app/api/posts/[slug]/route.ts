@@ -21,18 +21,12 @@ const POST: Post = {
 
 // GET SINGLE POST
 export const GET = async (
-    // api/posts/[slug]
     req: Request, 
-    // slug en params
     {params}: { params: { slug: string }}
 ) => {
     const { slug } = params;
-    // --> DB --> post
-    // return post
+
     try {
-        // const post = await prisma.post.findUnique({
-        //     where: { slug },
-        // });
         const post = await prisma.post.update({
             where: { slug },
             data: { view : { increment: 1 } }
