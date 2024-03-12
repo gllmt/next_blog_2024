@@ -4,15 +4,19 @@ import PageContainer from "@/components/page-container";
 import PostsList from "@/components/posts-list";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useCategories } from "@/hooks/useCategories";
 import { usePosts } from "@/hooks/usePosts";
-import { CATEGORIES } from "@/utils/data/categories";
-import { POSTS } from "@/utils/data/posts";
-import { Category } from "@/utils/types";
+import { Category } from "@prisma/client";
+// import { CATEGORIES } from "@/utils/data/categories";
+// import { POSTS } from "@/utils/data/posts";
+// import { Category } from "@/utils/types";
 import Link from "next/link";
 
 export default function Home() {
   // gets posts from db
   const {data: posts, isFetching} = usePosts();
+
+  const {data: categories} = useCategories();
 
   return (
     <PageContainer>
@@ -34,9 +38,9 @@ export default function Home() {
         </div>
         {/* Categories section */}
         <div className="flex flex-col md:flex-row justify-center items-center gap-4 mt-6">
-          {CATEGORIES.map((category: Category) => (
+          {categories?.map((category: Category) => (
             <Button key={category.id} variant="outline">
-              <Link href={`/categories/${category.slug}`}>{category.name}</Link>
+              <Link href={`/categories/${category.slug}`}>{category.title}</Link>
             </Button>
           ))}
         </div>
