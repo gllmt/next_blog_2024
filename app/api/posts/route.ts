@@ -1,8 +1,16 @@
+import { getAuthSession } from "@/lib/auth-options";
 import prisma from "@/lib/connect";
 import { NextResponse } from "next/server";
+// import { CATEGORY_SLUG } from "@/lib/constants";
 
 export const GET = async(req: Request) => {
   try {
+    // const session = await getAuthSession();
+
+    // if (!session || !session.user) {
+    //   return NextResponse.json({ message: "You are not authorized"}, {status: 403});
+    // }
+
     const {searchParams} = new URL(req.url);
     const catSlug = searchParams.get("cat");
 
