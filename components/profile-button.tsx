@@ -16,7 +16,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 export default function ProfileButton() {
   const  { data: session, status } = useSession();
 
-  console.log("Session : ", session, status);
+  // console.log("Session : ", session, status);
 
   if(!session) {
     return (

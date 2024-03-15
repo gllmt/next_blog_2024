@@ -16,7 +16,7 @@ export default function PostCard({post}: Props) {
         <CardHeader>
           <div className="relative overflow-hidden aspect-square">
             <Image
-              src={"/img/hero_bg.jpg"}
+              src={post.image || "/img/hero_bg.jpg"}
               alt={post.title}
               fill={true}
               loading="lazy"

@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator"
 import { usePost } from "@/hooks/usePost"
 import { Post } from "@/utils/types"
 import { Eye, MessageCircle } from "lucide-react"
+import Image from "next/image";
 
 export default function SinglePostPage({
   params
@@ -35,11 +36,14 @@ export default function SinglePostPage({
   return (
     <PageContainer>
       <div className="p-8">
-        <div
-          style={{backgroundImage: "url('/img/hero_bg.jpg')"}}
-          className="rounded-lg aspect-square md:aspect-[2.4/1] overflow-hidden bg-cover bg-center shadow-lg"
-        >
-          <div className="w-full h-full flex flex-col justify-center items-center">
+        <div className="relative rounded-lg flex aspect-square md:aspect-[2.4/1] overflow-hidden bg-cover bg-center shadow-lg">
+          <Image
+            className="object-cover w-full h-full"
+            src={post?.image || "/img/hero_bg.jpg"}
+            alt={post?.title as string}
+            fill
+          />
+          <div className="absolute w-full h-full flex flex-col justify-center items-center">
               <div className="sm:max-w-xl max-w-xs bg-secondary-foreground/80 p-4 rounded-lg">
                 <h1 className="font-bold text-3xl sm:text-5xl text-white dark:text-black text-center">
                   {post?.title}

@@ -16,48 +16,96 @@ import { Button } from "@/components/ui/button";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { slugify } from "@/utils/slugify";
+import Image from "next/image";
 
 export default function WritePage() {
   const [title, setTitle] = useState("");
   const [catSlug, setCatSlug] = useState("");
   const [content, setContent] = useState("");
 
-  const {data: categories, isFetching} = useCategories();
+  const [file, setFile] = useState<File>();
+  const [imageObjectUrl, setImageObjectUrl] = useState<string | null>(null);
 
-  const {mutate, isLoading} = useMutation((newPost: Partial<Post>) => axios.post("/api/posts", newPost),
+  const {data: categories, isFetching} = useCategories();
+  
+  const router = useRouter();
+
+  const createPost = (newPost: Partial<Post>) => axios.post("/api/posts", newPost).then((res) => res.data);
+  
+  const {mutate, isLoading} = useMutation(createPost,
   {
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: (data: Post) => {
+      router.push(`/posts/${data.slug}`);
     },
   }
   )
 
   const {data: session, status} = useSession();
 
-  const router = useRouter();
+
+  const onChangeFile = (e:SyntheticEvent) => {
+    const files = (e.target as HTMLInputElement).files;
+
+    if (!files || !files[0]) return;
+
+    setFile(files[0]);
+    setImageObjectUrl(URL.createObjectURL(files[0]));
+  }
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
-    if (title !== "" && content !== "" && catSlug !== "") {
+    const image = await uploadImage();
+    console.log("image is : ", image);
+
+    if (title !== "" && content !== "" && catSlug !== "" && image) {
       await mutate({
         title,
         content,
         catSlug,
         slug: slugify(title),
-        image: "/img/hero_bg.jpg"
+        image: image,
       });
     }
   };
 
-  // if (!session) {
-  //   router.replace("/login");
-  // }
+  const uploadImage = async () => {
+    try {
+      if (!file) return;
+
+      const data = new FormData();
+      data.set("file", file);
+
+      const response = await axios.post("/api/upload", data);
+      return response.data;
+
+    } catch (error) {
+      console.error("Error in uploadImage : ", error);
+    }
+  };
+
+  if (!session) {
+    router.replace("/login");
+  }
 
   return (
     <PageContainer>
       <div className="p-10">
         <PageTitle title="Write a new post" />
+        {/* Image */}
+        <div className="mb-6">
+          {imageObjectUrl && (
+            <div className="relative w-40 h-40 mx-auto mb-3 flex">
+              <Image
+                className="object-cover rounded-lg"
+                src={imageObjectUrl} 
+                fill
+                alt={title}
+              />
+            </div>
+          )}
+          <Input type="file" name="image" onChange={onChangeFile} />
+        </div>
         {/* Title post */}
         <Input 
           type="text" 
@@ -87,7 +135,9 @@ export default function WritePage() {
           onChange={setContent}
         />
         {/* Submit button */}
-        <Button className="mt-6" onClick={handleSubmit}>Publish</Button>
+        <Button disabled={isLoading} className="mt-6" onClick={handleSubmit}>
+          {isLoading ? "Creating..." : "Publish"}
+        </Button>
       </div>
     </PageContainer>
   )
