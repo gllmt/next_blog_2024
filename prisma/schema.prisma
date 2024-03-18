@@ -48,6 +48,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   posts         Post[]
+  comments     Comment[]
 }
 
 model VerificationToken {
@@ -67,6 +68,7 @@ model Post {
   image String?
   view Int @default(0)
   nbComments Int @default(0)
+  comments Comment[]
   // user
   userEmail String
   user User @relation(fields: [userEmail], references: [email])
@@ -81,4 +83,14 @@ model Category {
   title String
   image String?
   posts Post[]
+}
+
+model Comment {
+  id String @id @default(cuid())
+  createdAt DateTime @default(now())
+  content String
+  userEmail String
+  user User @relation(fields: [userEmail], references: [email])
+  postSlug String
+  post Post @relation(fields: [postSlug], references: [slug])
 }
