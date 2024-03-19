@@ -89,13 +89,6 @@ export default function WritePage() {
     }
   };
 
-  
-  // useLayoutEffect(() => {
-  //   if (!session) {
-  //     router.replace("/login");
-  //     return;
-  //   }
-  // }, [router, session]);
   useLayoutEffect(() => {
     if (!session) {
       router.replace("/login");

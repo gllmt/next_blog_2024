@@ -7,9 +7,6 @@ import { Input } from "@/components/ui/input";
 import { useCategories } from "@/hooks/useCategories";
 import { usePosts } from "@/hooks/usePosts";
 import { Category } from "@prisma/client";
-// import { CATEGORIES } from "@/utils/data/categories";
-// import { POSTS } from "@/utils/data/posts";
-// import { Category } from "@/utils/types";
 import Link from "next/link";
 
 export default function Home() {
