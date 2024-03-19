@@ -6,6 +6,7 @@ import ThemeProvider from "@/providers/theme-provider";
 import Footer from "@/components/footer";
 import QueryProvider from "@/providers/query-provider";
 import AuthProvider from "@/providers/auth-provider";
+import LenisSmoothScroll from "@/components/lenis-smooth-scroll";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,19 +23,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <QueryProvider>
-          <AuthProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <div className="flex flex-col justify-between min-h-screen">
-                <Header />
-                <div className="flex-grow">
-                  {children}
+        <LenisSmoothScroll>
+          <QueryProvider>
+            <AuthProvider>
+              <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+                <div className="flex flex-col justify-between min-h-screen">
+                  <Header />
+                  <div className="flex-grow">
+                    {children}
+                  </div>
+                  <Footer />
                 </div>
-                <Footer />
-              </div>
-            </ThemeProvider>
-          </AuthProvider>
-        </QueryProvider>
+              </ThemeProvider>
+            </AuthProvider>
+          </QueryProvider>
+        </LenisSmoothScroll>
       </body>
     </html>
   );
