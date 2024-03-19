@@ -8,10 +8,15 @@ import { useCategories } from "@/hooks/useCategories";
 import { Category, Post } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useLayoutEffect, useState } from "react";
 
 import "react-quill/dist/quill.snow.css";
-import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), {
+  loading: () => <p>Loading...</p>,
+  ssr: false,
+});
 import { Button } from "@/components/ui/button";
 import { useMutation } from "react-query";
 import axios from "axios";
@@ -84,9 +89,19 @@ export default function WritePage() {
     }
   };
 
-  if (!session) {
-    router.replace("/login");
-  }
+  
+  // useLayoutEffect(() => {
+  //   if (!session) {
+  //     router.replace("/login");
+  //     return;
+  //   }
+  // }, [router, session]);
+  useLayoutEffect(() => {
+    if (!session) {
+      router.replace("/login");
+      return;
+    }
+  }, [router, session]);
 
   return (
     <PageContainer>

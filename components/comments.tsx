@@ -57,21 +57,6 @@ function Comments({postSlug}: {postSlug: string}) {
       </div>
 
       {/* List of comments */}
-      {/* {isFetching ? <p>Loading comments...</p> : (
-        comments.map((comment: CommentWithUser) => (
-          <div className="" key={comment.id}>
-            <Avatar>
-              <AvatarImage src={comment.user.image || "/img/shadcn_avatar.jpg"} alt="" />
-              <AvatarFallback>{comment.user.name}</AvatarFallback>
-            </Avatar>
-            <div>
-              <span>{comment.user.name}</span>
-              <span>{new Date(comment.createdAt).toLocaleDateString()}</span>
-            </div>
-            <p>{comment.content}</p>
-          </div>
-        ))
-      )} */}
       {isFetching ? <p>Loading comments...</p> : (
         comments.map((comment: CommentWithUser) => (
           <div className="flex items-center mt-4" key={comment.id}>
