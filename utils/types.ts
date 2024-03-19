@@ -5,6 +5,7 @@ export type Category = {
     name: string;
     slug: string;
 }
+
 export type Post = {
     id: number;
     category: string;
